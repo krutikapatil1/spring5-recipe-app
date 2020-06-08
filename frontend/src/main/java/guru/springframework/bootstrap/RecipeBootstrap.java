@@ -9,9 +9,11 @@ import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.CategoryRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.Optional;
  * @author : Krutika Patil
  * @since : 6/7/2020, Sun
  **/
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -36,8 +39,10 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loaded Bootstrap data");
     }
 
     private List<Recipe> getRecipes() {
@@ -75,6 +80,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         UnitOfMeasure pintUom = unitOfMeasureOptionalPint.get();
         UnitOfMeasure cupsUom = unitOfMeasureOptionalCups.get();
 
+        log.debug("Obtained Units of Measure");
+
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
         if (!americanCategoryOptional.isPresent()) {
             throw new RuntimeException("Expected Category not found");
@@ -88,6 +95,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Category americanCategory = americanCategoryOptional.get();
         Category mexicanCategory = mexicanCategoryOptional.get();
 
+        log.debug("Obtained Categories");
+
         Recipe guacRecipe = new Recipe();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
@@ -95,7 +104,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacRecipe.setDifficulty(Difficulty.EASY);
         guacRecipe.setServings(2);
         guacRecipe.setDirections("1 Cut the avocado, remove flesh: Cut the avocados in half. Remove the pit. " +
-                "Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. Place in a bowl." +"\n" +
+                "Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. Place in a bowl." + "\n" +
                 "2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)\n" +
                 "3 Add salt, lime juice, and the rest: Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n" +
                 "\n" +
@@ -107,26 +116,28 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "4 Serve: Serve immediately, or if making a few hours ahead, place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.");
 
         Notes guacNotes = new Notes();
-        guacNotes.setRecipeNotes("Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. Don’t let the lack of availability of other ingredients stop you from making guacamole." +"\n" +
+        guacNotes.setRecipeNotes("Simple Guacamole: The simplest version of guacamole is just mashed avocados with salt. Don’t let the lack of availability of other ingredients stop you from making guacamole." + "\n" +
                 "Quick guacamole: For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados." + "\n" +
                 "Don’t have enough avocados? To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.");
 
         guacRecipe.setNotes(guacNotes);
 
         guacRecipe.addIngredient(new Ingredient("ripe avocadoes", new BigDecimal(2), eachUom));
-        guacRecipe.addIngredient(new Ingredient("Salt, more to taste", new BigDecimal(1/4), teaSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("Salt, more to taste", new BigDecimal(1 / 4), teaSpoonUom));
         guacRecipe.addIngredient(new Ingredient("Fresh lime juice or lemon juice", new BigDecimal(1), tableSpoonUom));
         guacRecipe.addIngredient(new Ingredient("Minced Red Onion", new BigDecimal(2), tableSpoonUom));
         guacRecipe.addIngredient(new Ingredient("Serrano chillies, stems and seeds removed", new BigDecimal(2), eachUom));
         guacRecipe.addIngredient(new Ingredient("Cilantro", new BigDecimal(2), tableSpoonUom));
         guacRecipe.addIngredient(new Ingredient("Freshly grated black pepper", new BigDecimal(1), dashUom));
-        guacRecipe.addIngredient(new Ingredient("Ripe tomato, seeds and pulp removed, chopped", new BigDecimal(1/2), eachUom));
+        guacRecipe.addIngredient(new Ingredient("Ripe tomato, seeds and pulp removed, chopped", new BigDecimal(1 / 2), eachUom));
         guacRecipe.addIngredient(new Ingredient("Red radishes or jicama, to garnish", new BigDecimal(1), eachUom));
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
 
         recipes.add(guacRecipe);
+
+        log.debug("Added guacRecipe to recipes list");
 
         //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
@@ -185,6 +196,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.getCategories().add(mexicanCategory);
 
         recipes.add(tacosRecipe);
+
+        log.debug("Added tacos recipe to recipe list");
 
         return recipes;
     }
