@@ -4,15 +4,13 @@ import guru.springframework.domain.UnitOfMeasure;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
 
 /**
  * @author : Krutika Patil
@@ -22,21 +20,24 @@ import static org.mockito.BDDMockito.given;
 @DataJpaTest
 public class UnitOfMeasureRepositoryIT {
 
-    @Mock
+    @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void findByDescription() throws Exception {
-        UnitOfMeasure unitOfMeasureTableSpoon = new UnitOfMeasure();
-        unitOfMeasureTableSpoon.setDescription("Tablespoon");
-        given(unitOfMeasureRepository.findByDescription("Tablespoon")).willReturn(Optional.of(unitOfMeasureTableSpoon));
-        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
+    public void findByDescriptionTeaspoon() throws Exception {
+        Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Teaspoon");
+        assertEquals(true, uomOptional.isPresent());
+        assertEquals("Teaspoon", uomOptional.get().getDescription());
+    }
 
-        assertEquals("Tablespoon", uomOptional.get().getDescription());
+    @Test
+    public void findByDescriptionCup() throws Exception {
+        Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByDescription("Cup");
+        assertEquals(true, unitOfMeasureOptional.isPresent());
+        assertEquals("Cup", unitOfMeasureOptional.get().getDescription());
     }
 }
