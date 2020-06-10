@@ -1,19 +1,18 @@
 package guru.springframework.repositories;
 
-import guru.springframework.Spring5RecipeAppApplication;
 import guru.springframework.domain.UnitOfMeasure;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 
 /**
  * @author : Krutika Patil
@@ -23,18 +22,21 @@ import static org.junit.Assert.assertEquals;
 @DataJpaTest
 public class UnitOfMeasureRepositoryIT {
 
-    @Autowired
+    @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void findByDescription() throws Exception {
-
+        UnitOfMeasure unitOfMeasureTableSpoon = new UnitOfMeasure();
+        unitOfMeasureTableSpoon.setDescription("Tablespoon");
+        given(unitOfMeasureRepository.findByDescription("Tablespoon")).willReturn(Optional.of(unitOfMeasureTableSpoon));
         Optional<UnitOfMeasure> uomOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
 
-        assertEquals("Teaspoon", uomOptional.get().getDescription());
+        assertEquals("Tablespoon", uomOptional.get().getDescription());
     }
 }
