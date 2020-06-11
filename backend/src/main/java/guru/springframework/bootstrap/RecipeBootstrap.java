@@ -198,7 +198,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         recipes.add(tacosRecipe);
 
         log.debug("Added tacos recipe to recipe list");
-
         return recipes;
     }
 }
