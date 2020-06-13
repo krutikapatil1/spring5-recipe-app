@@ -3,6 +3,7 @@ package guru.springframework.controller;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,4 @@ public class RecipesController {
         log.debug("Inside getRecipes");
         return recipeServiceImpl.getRecipes();
     }
-
 }

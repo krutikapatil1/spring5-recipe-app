@@ -4,12 +4,16 @@ import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.services.RecipeServiceImpl;
 import junit.framework.TestCase;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import static org.mockito.ArgumentMatchers.any;
 
 /**
  * @author : Krutika Patil
@@ -27,6 +31,7 @@ public class RecipesControllerTest extends TestCase {
         recipeService = new RecipeServiceImpl(recipeRepository);
     }
 
+    @Test
     public void testGetRecipes() {
         Set<Recipe> recipes = new HashSet<>();
         Recipe recipe = new Recipe();

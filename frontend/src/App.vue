@@ -1,24 +1,22 @@
 <template>
   <div id="app">
-    <b-table striped hover head-variant="dark" :items="dataRes"></b-table>
+    <app-header></app-header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-xs-12 col-sm-12">
+          <router-view></router-view>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios';
-export default {
-  name: 'App',
-  data() {
-    return {
-      dataRes: []
+  import Header from './components/common/Header.vue';
+  export default {
+    components: {
+      appHeader: Header
     }
-  },
-  created() {
-    axios.get('getRecipes').then(res=> {
-      console.log(res.data);
-      this.dataRes = res.data;
-    })
-  }
 }
 </script>
 
