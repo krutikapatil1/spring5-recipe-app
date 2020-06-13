@@ -1,5 +1,7 @@
 package guru.springframework.controller;
 
+import guru.springframework.converters.RecipeCommandToRecipeConverter;
+import guru.springframework.converters.RecipeToRecipeCommandConverter;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.services.RecipeServiceImpl;
@@ -8,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -24,11 +27,15 @@ public class RecipesControllerTest extends TestCase {
     RecipeServiceImpl recipeService;
     @Mock
     RecipeRepository recipeRepository;
+    @Autowired
+    RecipeCommandToRecipeConverter recipeCommandToRecipeConverter;
+    @Autowired
+    RecipeToRecipeCommandConverter recipeToRecipeCommandConverter;
 
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipeConverter, recipeToRecipeCommandConverter);
     }
 
     @Test
