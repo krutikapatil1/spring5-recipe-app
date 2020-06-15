@@ -37,7 +37,7 @@ public class RecipeServiceImplTest extends TestCase {
 
     @Transactional
     @Test
-    public void testSaveOfDescription() throws Exception {
+    public void testSaveDescription() throws Exception {
         //given
         Iterable<Recipe> recipes = recipeRepository.findAll();
         Recipe testRecipe = recipes.iterator().next();
@@ -52,5 +52,19 @@ public class RecipeServiceImplTest extends TestCase {
         assertEquals(testRecipe.getId(), savedRecipeCommand.getId());
         assertEquals(testRecipe.getCategories().size(), savedRecipeCommand.getCategories().size());
         assertEquals(testRecipe.getIngredients().size(), savedRecipeCommand.getIngredients().size());
+    }
+
+    @Transactional
+    @Test
+    public void testSaveRecipeCommand() throws Exception {
+        //given
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        //when
+        RecipeCommand recipeCommand1 = recipeService.saveRecipeCommand(recipeCommand);
+
+        //then
+        assertEquals(recipeCommand.getId(), recipeCommand1.getId());
     }
 }

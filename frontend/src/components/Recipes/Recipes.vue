@@ -5,18 +5,16 @@
                 <app-recipe-list></app-recipe-list>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8">
-                <app-recipe-detail></app-recipe-detail>
+                <router-view></router-view>
             </div>
         </div>
     </div>
 </template>
 <script>
     import RecipeList from "./RecipeList.vue";
-    import RecipeDetail from "./RecipeDetail.vue";
     export default {
         components: {
             appRecipeList: RecipeList,
-            appRecipeDetail: RecipeDetail
         }
     }
 </script>

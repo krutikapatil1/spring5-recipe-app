@@ -5,14 +5,16 @@ import {BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import VueRouter from 'vue-router';
-import {routes} from './routes';
+import Vuelidate from "vuelidate";
+import routes from './routes';
+import store from './store';
 
 axios.defaults.baseURL="http://localhost:8080";
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueRouter);
+Vue.use(Vuelidate);
 Vue.config.productionTip = false
-Vue.config.devtools = true
 
 export const eventEmitter = new Vue();
 
@@ -22,5 +24,6 @@ const router = new VueRouter({
 })
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

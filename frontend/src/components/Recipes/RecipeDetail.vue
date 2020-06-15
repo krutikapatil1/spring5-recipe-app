@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
                 <div v-if="recipe == undefined">
-                    <p>Please select a recipe!</p>
+                    <p>Recipe Not Found!</p>
                 </div>
                 <div v-else>
                     <div>
@@ -118,24 +118,28 @@
 </template>
 
 <script>
-    import {eventEmitter} from "../../main";
-
     export default {
         name: "RecipeDetail",
         data() {
             return {
-                items: [],
                 recipe: undefined
             }
         },
         created() {
-            eventEmitter.$on('recipeSelected', data => {
-                this.recipe = data;
-                this.items = [];
-                this.items.push(this.recipe);
-                console.log(this.recipe);
-            })
+          console.log(this.$route.params.id);
+          let id = this.$route.params.id;
+          console.log(this.$store.getters.recipeById(id));
+          this.recipe = this.$store.getters.recipeById(id);
+        },
+        watch: {
+            '$route' (to) {
+                console.log(to.params.id);
+                let id = to.params.id;
+                console.log(this.$store.getters.recipeById(id));
+                this.recipe = this.$store.getters.recipeById(id);
+            }
         }
+
     }
 </script>
 
