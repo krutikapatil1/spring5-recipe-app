@@ -23,6 +23,16 @@ export default new Vuex.Store({
                 }
             })
             state.recipes.push(newRecipe);
+        },
+        DELETE_RECIPE: (state, id) => {
+            let index = -1;
+            state.recipes.forEach(recipe => {
+                index++;
+                if (recipe.id == id) {
+                    state.recipes.splice(index, 1);
+                    return;
+                }
+            })
         }
     },
     actions: {
@@ -41,6 +51,14 @@ export default new Vuex.Store({
             }).catch(error => {
                     console.log(error);
                 })
+        },
+        deleteRecipe: ({commit}, id) => {
+            axios.delete('/deleteRecipe/' +id).then(res => {
+                console.log(res);
+                commit('DELETE_RECIPE', id);
+            }).catch(error => {
+                console.log(error);
+            })
         }
     },
     getters: {

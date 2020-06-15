@@ -7,8 +7,11 @@
                 </div>
                 <div v-else>
                     <div class="row">
-                        <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-md-3 col-xs-3 col-sm-3">
                             <router-link :to="{path: '/recipes/edit/' +recipe.id}" tag="button" class="btn btn-primary">Edit <i class="fa fa-pencil-square-o" aria-hidden="true"></i></router-link>
+                        </div>
+                        <div class="col-md-3 col-xs-3 col-sm-3">
+                            <button class="btn btn-danger" @click="deleteRecipe">Delete Recipe</button>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -143,6 +146,12 @@
           let id = this.$route.params.id;
           console.log(this.$store.getters.recipeById(id));
           this.recipe = this.$store.getters.recipeById(id);
+        },
+        methods: {
+            deleteRecipe() {
+                this.$store.dispatch('deleteRecipe', this.recipe.id);
+                this.$router.push({path: '/recipes'});
+            }
         },
         watch: {
             '$route' (to) {

@@ -4,6 +4,8 @@ import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,5 +38,10 @@ public class RecipesController {
         System.out.println(recipeCommand);
         RecipeCommand savedRecipeCommand = recipeServiceImpl.saveRecipeCommand(recipeCommand);
         return savedRecipeCommand;
+    }
+
+    @DeleteMapping(value = "deleteRecipe/{id}")
+    public void deleteRecipe(@PathVariable String id) {
+        recipeServiceImpl.deleteRecipeById(Long.parseLong(id));
     }
 }
