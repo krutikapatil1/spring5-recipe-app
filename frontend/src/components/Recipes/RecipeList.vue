@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-12">
-                <router-link :to="{path: '/recipes/addRecipe'}" tag="button" class="btn btn-success">New Recipe</router-link>
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <router-link :to="{path: '/recipes/addUpdateRecipe'}" tag="button" class="btn btn-success">New Recipe</router-link>
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-12">
+            <div class="col-md-12 col-xs-12 col-sm-12">
                 <router-link
                         tag="a"
                         class="list-group-item clearfix"
@@ -20,9 +20,8 @@
                         <h6 class="list-group-item-heading">{{ recipe.description }}</h6>
                         <p class="list-group-item-text">{{ recipe.description }}</p>
                     </div>
-                    <!--<span class="float-right">
-                    <img :src="recipe.imageUrl" alt class="img-responsive" style="max-height: 50px;" />
-                  </span>-->
+                    <span class="float-right">
+                  </span>
                 </router-link>
             </div>
         </div>
@@ -45,6 +44,13 @@
         },
         created() {
             this.$store.dispatch('loadData');
+        },
+        watch:{
+            '$route' (to){
+                if (to.params.id == null) {
+                    this.selectedIndex = -1;
+                }
+            }
         }
     }
 </script>

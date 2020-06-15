@@ -13,8 +13,16 @@ export default new Vuex.Store({
         LOAD_DATA: (state, recipes) => {
             state.recipes = recipes;
         },
-        ADD_RECIPE: (state, recipe) => {
-            state.recipes.push(recipe);
+        ADD_UPDATE_RECIPE: (state, newRecipe) => {
+            let index = -1;
+            state.recipes.forEach(recipe => {
+                index++;
+                if (recipe.id == newRecipe.id) {
+                    state.recipes.splice(index, 1);
+                    return;
+                }
+            })
+            state.recipes.push(newRecipe);
         }
     },
     actions: {
@@ -26,10 +34,10 @@ export default new Vuex.Store({
                 console.log(error);
             })
         },
-        addRecipe: ({commit}, recipe) => {
+        addUpdateRecipe: ({commit}, recipe) => {
             axios.post('/saveRecipe', recipe).then(res => {
                 console.log(res.data);
-                commit('ADD_RECIPE', res.data);
+                commit('ADD_UPDATE_RECIPE', res.data);
             }).catch(error => {
                     console.log(error);
                 })
