@@ -43,7 +43,7 @@ public class Recipe {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
     @Lob
-    private Byte[] image;
+    private String imageUrl;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference

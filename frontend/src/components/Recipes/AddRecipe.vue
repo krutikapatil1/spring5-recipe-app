@@ -20,6 +20,19 @@
                         ></b-form-input>
                     </b-form-group>
 
+                    <b-form-group id="input-group-12" label="Image:" label-for="input-12">
+                        <b-form-input
+                            id="input-12"
+                            v-model="recipe.imageUrl"
+                            required
+                            >
+                        </b-form-input>
+                        <div>
+                            <p>Selected Image:</p>
+                            <img :src="recipe.imageUrl" width="300px" height="300px" alt="">
+                        </div>
+                    </b-form-group>
+
                     <b-form-group id="input-group-4" label="Categories:" label-for="checkboxes-4">
                         <b-form-checkbox-group v-model="categories" id="checkboxes-4">
                             <b-form-checkbox value="American">American</b-form-checkbox>
@@ -163,6 +176,7 @@
                     servings: '',
                     source: '',
                     url: '',
+                    imageUrl: '',
                     ingredients: [
                         {
                             description: '',

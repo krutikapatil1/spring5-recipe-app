@@ -33,6 +33,12 @@
                                                 <li v-for="category in recipe.categories" :key="category.id">{{category.description}}</li>
                                             </ul>
                                         </div>
+                                        <div class="col-md-3 col-xs-3 col-sm-3">
+                                            <h6>Image:</h6>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3 col-sm-3">
+                                            <img :src="recipe.imageUrl" width="100px" height="100px" alt="">
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3 col-xs-3 col-sm-3">
