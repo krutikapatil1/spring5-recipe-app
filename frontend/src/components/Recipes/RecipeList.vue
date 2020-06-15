@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
-                <router-link :to="{path: '/recipes/addUpdateRecipe'}" tag="button" class="btn btn-success">New Recipe</router-link>
+                <router-link :to="{path: '/recipes/addRecipe'}" tag="button" class="btn btn-success">New Recipe</router-link>
             </div>
         </div>
         <div class="row mt-5">
