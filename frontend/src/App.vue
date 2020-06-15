@@ -16,8 +16,11 @@
   export default {
     components: {
       appHeader: Header
+    },
+    created() {
+      this.$store.dispatch('loadDifficultyLevels');
     }
-}
+  }
 </script>
 
 <style>

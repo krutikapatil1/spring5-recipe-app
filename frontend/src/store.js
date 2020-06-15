@@ -7,7 +7,8 @@ Vue.config.devtools = true
 
 export default new Vuex.Store({
     state: {
-        recipes: []
+        recipes: [],
+        difficultyLevels: []
     },
     mutations: {
         LOAD_DATA: (state, recipes) => {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
                     return;
                 }
             })
+        },
+        LOAD_DIFFICULTY_LEVELS: (state, difficultyList) => {
+            state.difficultyLevels = difficultyList;
         }
     },
     actions: {
@@ -59,6 +63,14 @@ export default new Vuex.Store({
             }).catch(error => {
                 console.log(error);
             })
+        },
+        loadDifficultyLevels: ({commit}) => {
+            axios.get('/getDifficultyLevels').then(res => {
+                console.log(res.data);
+                commit('LOAD_DIFFICULTY_LEVELS', res.data);
+            }).catch(error => {
+                console.log(error);
+            })
         }
     },
     getters: {
@@ -68,6 +80,9 @@ export default new Vuex.Store({
         recipeById: (state) => (id) => {
             let recipe = state.recipes.find( recipe => recipe.id == id );
             return recipe;
+        },
+        difficultyLevels: (state) => {
+            return state.difficultyLevels;
         }
     }
 })

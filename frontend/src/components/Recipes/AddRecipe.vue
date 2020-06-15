@@ -149,6 +149,7 @@
 
 <script>
     import { required } from 'vuelidate/lib/validators';
+    import { mapGetters } from 'vuex';
     export default {
         name: "AddEditRecipe",
         data() {
@@ -176,14 +177,14 @@
                     },
                     directions: ''
                 },
-                difficultyLevels: [
-                    'EASY', 'MODERATE', 'HARD'
-                ],
                 uomTypes: [
                     'Teaspoon', 'Tablespoon', 'Cup', 'Dash', 'Pint', 'Each', 'Ounce'
                 ],
                 categories: []
             }
+        },
+        computed: {
+            ...mapGetters(['difficultyLevels']),
         },
         validations: {
             recipe: {
