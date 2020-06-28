@@ -4,8 +4,6 @@ import guru.springframework.commands.CategoryCommand;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.NotesCommand;
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.Category;
-import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
 import junit.framework.TestCase;
 import org.junit.Test;
